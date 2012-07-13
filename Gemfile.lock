@@ -137,9 +137,10 @@ PLATFORMS
 DEPENDENCIES
   capybara
   cucumber-rails
+  nokogiri
   pg
   rails (= 3.0.10)
-  rspec-rails (>= 2.0.1)
+  rspec-rails
   sqlite3
   thin
   unicorn

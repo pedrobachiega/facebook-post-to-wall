@@ -14,8 +14,13 @@ group :development do
 	gem 'sqlite3'
 end
 
-group :development, :test do
+gem 'nokogiri'
+
+group :test do
 	gem "cucumber-rails"
+end
+
+group :development, :test do
 	gem "capybara"
-	gem "rspec-rails", ">= 2.0.1"
+	gem "rspec-rails"
 end
