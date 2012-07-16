@@ -1,4 +1,9 @@
 FacebookPostToWall::Application.routes.draw do
+
+  namespace :fb_post_to_wall do
+    get 'page-info' => 'open_graph_proxy#page_info', :as => :og_page_info
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

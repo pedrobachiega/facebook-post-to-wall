@@ -17,10 +17,7 @@ end
 gem 'nokogiri'
 
 group :test do
-	gem "cucumber-rails"
-end
-
-group :development, :test do
 	gem "capybara"
+	gem "cucumber-rails"
 	gem "rspec-rails"
 end

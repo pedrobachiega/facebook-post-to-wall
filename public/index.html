@@ -1,239 +1,199 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Ruby on Rails: Welcome aboard</title>
-    <style type="text/css" media="screen">
-      body {
-        margin: 0;
-        margin-bottom: 25px;
-        padding: 0;
-        background-color: #f0f0f0;
-        font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
-        font-size: 13px;
-        color: #333;
-      }
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Post to Facebook Wall</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+<script type="text/javascript" src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<!--
+<link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css" />
+-->
+<style type="text/css">
+html,body{text-align:center; font-family:Helvetica, Arial, sans-serif;}
+#wrapper{width:80%; margin:0 auto; text-align:left; color:#666;}
+h1{text-align:center;}
+a {text-decoration:none;}
 
-      h1 {
-        font-size: 28px;
-        color: #000;
-      }
+#fb_post_to_wall {
+  width:700px;
+  margin: 0 auto 0 auto;
+}
+#fb_post_to_wall form {
+  border:solid 1px #B4BBCD;
+  background-color: #F2F2F2;
+}
 
-      a  {color: #03c}
-      a:hover {
-        background-color: #03c;
-        color: white;
-        text-decoration: none;
-      }
+#fbpw_message_wrap {
+  text-align: center;
+  height:135px;
+}
+#fbpw_message_wrap #fbpw_message {
+  font-family:Helvetica, Arial, sans-serif;
+  font-size:13px;
+  text-align: left;
+  width:90%;
+  border: solid 1px #BDC7D8;
+  margin: 15px auto 6px auto;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+}
+#fbpw_message_wrap #fbpw_sharebtn {
+  padding:20px 5px;
+}
+#fbpw_message_wrap #fbpw_sharebtn a, #fbpw_message_wrap #fbpw_sharebtn a:visited {
+  font-family:Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+  color: #FFFFFF;
+  background-color: #5B74A8;
+  border-color: #29447E #29447E #1A356E;
+  border:1px solid #999;
+  cursor: pointer;
+  width: 50px;
+  padding: 5px;
+  border : 0px;
+  float:right;
+  margin-right:10px;
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, .1);
+}
 
+#fbpw_fetched_data {
+  height:125px;
+  margin-bottom:10px;
+}
+#fbpw_fetched_data #fbpw_loader {
+  margin:16px 16px 8px 8px;
+}
 
-      #page {
-        background-color: #f0f0f0;
-        width: 750px;
-        margin: 0;
-        margin-left: auto;
-        margin-right: auto;
-      }
+#fbpw_images {
+  width:100px;
+  height:100px;
+  float:left;
+  margin:15px 20px 15px 15px;
+}
+#fbpw_images img.fbpw_img {
+  display:none;
+}
+#fbpw_info {
+  width:360px;
+  height:100px;
+  float:left;
+  margin:15px
+}
+#fbpw_info label.title {
+  font-size:12px;
+  font-weight:bold;
+}
+#fbpw_info label.url {
+  font-size: 11px;
+  color: #666;
+}
+#fbpw_info label.desc {
+  font-size:11px;
+}
+#fbpw_info #fbpw_total {
+  font-size:9px;
+  color:#000000;
+  float:left;
+  margin:5px;
+}
 
-      #content {
-        float: left;
-        background-color: white;
-        border: 3px solid #aaa;
-        border-top: none;
-        padding: 25px;
-        width: 500px;
-      }
+</style>
+</head>
+<body>
+<div id="wrapper">
 
-      #sidebar {
-        float: right;
-        width: 175px;
-      }
+  <header>
+    <h1>Post to Facebook Wall</h1>
+  </header>
 
-      #footer {
-        clear: both;
-      }
+  <section id="fb_post_to_wall">
 
+    <form>
+      <input type="hidden" id="fbpw_current_img"/>
+      <input type="hidden" id="fbpw_ajax_flag"/>
 
-      #header, #about, #getting-started {
-        padding-left: 75px;
-        padding-right: 30px;
-      }
-
-
-      #header {
-        background-image: url("images/rails.png");
-        background-repeat: no-repeat;
-        background-position: top left;
-        height: 64px;
-      }
-      #header h1, #header h2 {margin: 0}
-      #header h2 {
-        color: #888;
-        font-weight: normal;
-        font-size: 16px;
-      }
-
-
-      #about h3 {
-        margin: 0;
-        margin-bottom: 10px;
-        font-size: 14px;
-      }
-
-      #about-content {
-        background-color: #ffd;
-        border: 1px solid #fc0;
-        margin-left: -55px;
-        margin-right: -10px;
-      }
-      #about-content table {
-        margin-top: 10px;
-        margin-bottom: 10px;
-        font-size: 11px;
-        border-collapse: collapse;
-      }
-      #about-content td {
-        padding: 10px;
-        padding-top: 3px;
-        padding-bottom: 3px;
-      }
-      #about-content td.name  {color: #555}
-      #about-content td.value {color: #000}
-
-      #about-content ul {
-        padding: 0;
-        list-style-type: none;
-      }
-
-      #about-content.failure {
-        background-color: #fcc;
-        border: 1px solid #f00;
-      }
-      #about-content.failure p {
-        margin: 0;
-        padding: 10px;
-      }
-
-
-      #getting-started {
-        border-top: 1px solid #ccc;
-        margin-top: 25px;
-        padding-top: 15px;
-      }
-      #getting-started h1 {
-        margin: 0;
-        font-size: 20px;
-      }
-      #getting-started h2 {
-        margin: 0;
-        font-size: 14px;
-        font-weight: normal;
-        color: #333;
-        margin-bottom: 25px;
-      }
-      #getting-started ol {
-        margin-left: 0;
-        padding-left: 0;
-      }
-      #getting-started li {
-        font-size: 18px;
-        color: #888;
-        margin-bottom: 25px;
-      }
-      #getting-started li h2 {
-        margin: 0;
-        font-weight: normal;
-        font-size: 18px;
-        color: #333;
-      }
-      #getting-started li p {
-        color: #555;
-        font-size: 13px;
-      }
-
-
-      #sidebar ul {
-        margin-left: 0;
-        padding-left: 0;
-      }
-      #sidebar ul h3 {
-        margin-top: 25px;
-        font-size: 16px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #ccc;
-      }
-      #sidebar li {
-        list-style-type: none;
-      }
-      #sidebar ul.links li {
-        margin-bottom: 5px;
-      }
-
-    </style>
-    <script type="text/javascript">
-      function about() {
-        info = document.getElementById('about-content');
-        if (window.XMLHttpRequest)
-          { xhr = new XMLHttpRequest(); }
-        else
-          { xhr = new ActiveXObject("Microsoft.XMLHTTP"); }
-        xhr.open("GET","rails/info/properties",false);
-        xhr.send("");
-        info.innerHTML = xhr.responseText;
-        info.style.display = 'block'
-      }
-    </script>
-  </head>
-  <body>
-    <div id="page">
-      <div id="sidebar">
-        <ul id="sidebar-items">
-          <li>
-            <h3>Browse the documentation</h3>
-            <ul class="links">
-              <li><a href="http://api.rubyonrails.org/">Rails API</a></li>
-              <li><a href="http://stdlib.rubyonrails.org/">Ruby standard library</a></li>
-              <li><a href="http://corelib.rubyonrails.org/">Ruby core</a></li>
-              <li><a href="http://guides.rubyonrails.org/">Rails Guides</a></li>
-            </ul>
-          </li>
-        </ul>
+      <div id="fbpw_fetched_data" style="display:none;">
+        <div id="fbpw_loader">
+          <img src="/images/ajax-loader.gif" style="float:right;">
+        </div>
+        <div id="fbpw_ajax_content"></div>
       </div>
-
-      <div id="content">
-        <div id="header">
-          <h1>Welcome aboard</h1>
-          <h2>You&rsquo;re riding Ruby on Rails!</h2>
-        </div>
-
-        <div id="about">
-          <h3><a href="rails/info/properties" onclick="about(); return false">About your application&rsquo;s environment</a></h3>
-          <div id="about-content" style="display: none"></div>
-        </div>
-
-        <div id="getting-started">
-          <h1>Getting started</h1>
-          <h2>Here&rsquo;s how to get rolling:</h2>
-
-          <ol>
-            <li>
-              <h2>Use <code>rails generate</code> to create your models and controllers</h2>
-              <p>To see all available options, run it without parameters.</p>
-            </li>
-
-            <li>
-              <h2>Set up a default route and remove or rename this file</h2>
-              <p>Routes are set up in config/routes.rb.</p>
-            </li>
-
-            <li>
-              <h2>Create your database</h2>
-              <p>Run <code>rake db:migrate</code> to create your database. If you're not using SQLite (the default), edit <code>config/database.yml</code> with your username and password.</p>
-            </li>
-          </ol>
+      <div id="fbpw_message_wrap">
+        <textarea id="fbpw_message">teste http://sandbox.pedrobachiega.com/rd-blog-index.html</textarea>
+        <div id="fbpw_sharebtn">
+          <a href="javascript:void(0);">Share</a>
         </div>
       </div>
+    </form>
 
-      <div id="footer">&nbsp;</div>
-    </div>
-  </body>
+  </section>
+
+</div>
+<script type="text/javascript">
+function goNextImg() {
+  console.log('next');
+  var firstimage = $('input#fbpw_current_img').val();
+  console.log(firstimage);
+  if (firstimage <= $('input#fbpw_total_imgs').val() - 1) {
+    $('img#fbpw_img_'+firstimage).hide();
+    firstimage = parseInt(firstimage) + parseInt(1);
+    $('input#fbpw_current_img').val(firstimage);
+    $('img#fbpw_img_'+firstimage).show();
+  }
+  $('#fbpw_total > span').html(firstimage);
+  return false;
+}
+function goPrevImg() {
+  var firstimage = $('input#fbpw_current_img').val();
+  if (firstimage >= 2) {
+    $('img#fbpw_img_'+firstimage).hide();
+    firstimage = parseInt(firstimage) - parseInt(1);
+    $('input#fbpw_current_img').val(firstimage);
+    $('img#fbpw_img_'+firstimage).show();
+  }
+  $('#fbpw_total > span').html(firstimage);
+  return false;
+}
+
+(function($){
+  $(document).ready(function(){
+
+    $('input#fbpw_ajax_flag').val(0);
+    $(document).keypress(function(e) {
+      if (e.keyCode===32 || e.charCode===32) {
+        var content = $('#fbpw_message').val();
+        var url = content.match(/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/);
+        console.log(url);
+
+        if (url && url.length>0 && $('input#fbpw_ajax_flag').val()==0) {
+          $("#fbpw_fetched_data").slideDown('show');
+          $.get("/fb_post_to_wall/page-info.html?url="+url[0], function(response) {
+            //console.log(response);
+            $("#fbpw_ajax_content").html(response);
+            $('#fbpw_loader').hide();
+            $('img#fbpw_img_1').fadeIn();
+            $('input#fbpw_current_img').val(1);
+            $('input#fbpw_ajax_flag').val(1);
+          });
+        }
+      }
+    });
+
+/*
+    ///////////////////////////////Share Button
+    $('#shareButton').livequery("click", function () {
+        alert(' To be continued in Tutorial Part 2! :) ');
+
+    });
+    /////////////////////////////////
+*/
+
+
+  });
+})(jQuery);
+</script>
+</body>
 </html>

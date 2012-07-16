@@ -1,0 +1,31 @@
+<div id="fbpw_images">
+<%
+ total = 0;
+ if @info["image"].is_a?(String)
+%>
+	<img src="<%= @info["image"] %>" id="fbpw_img_1" width="100" class="fbpw_img"/>
+<%
+ 	total = 1;
+ else
+ 	@info["image"].each_with_index do |img, i|
+	%>
+		<img src="<%= img %>" id="fbpw_img_<%= (i+1) %>" width="100" class="fbpw_img"/>
+	<%
+		total+=1;
+ 	end
+ end
+%>
+	<input id="fbpw_total_imgs" value="<%= total %>" type="hidden"/>
+</div>
+<div id="fbpw_info">
+	<label class="title"><%= @info["title"] %></label><br/>
+	<label class="url"><%= @info["url"] %></label><br/> 
+	<label class="desc"><%= @info["description"] %></label><br/><br/>
+
+<% if total > 1 %>
+	<div style="float:left"><a href="javascript:goPrevImg();" id="fbpw_prev_img"><img src="images/prev.png" alt="Previous"/></a><a href="javascript:goNextImg();" id="fbpw_next_img"><img src="images/next.png" alt="Next"/></a></div>
+	<div id="fbpw_total"><span>1</span> of <%= total %></div><br/>
+<% end %>
+</div>
+
+
